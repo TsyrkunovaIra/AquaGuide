@@ -2,24 +2,22 @@ package com.example.AquaGuide;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@RestController
+@RestController()
 @RequestMapping("/api/v1/aquariums")
 @RequiredArgsConstructor
 public class AquariumController {
 
     private final AquariumService aquariumService;
 
-    public AquariumController(AquariumService aquariumService) {
-        this.aquariumService = aquariumService;
-    }
-
-    @PostMapping
+      @PostMapping
     public ResponseEntity<String> create(@RequestBody AquariumUpdateEvent event) {
          Integer id = aquariumService.createAquarium(event);
         return ResponseEntity.ok(id.toString());
@@ -33,6 +31,15 @@ public class AquariumController {
         return processEvent(id, event, "ADD_SPECIES", "Подбор обитателей запущен.");
 
     }
+
+    @GetMapping (value = "/{id}/available-species", produces = MediaType.APPLICATION_JSON_VALUE)
+    public
+    List<AquariumContents> addContents(@PathVariable Long id) {
+        List<AquariumContents>aquariumContents = aquariumService.aquariumContents(id);
+        return aquariumContents;
+
+    }
+
 
     private ResponseEntity<String> processEvent(Long id, AquariumUpdateEvent event, String action, String message) {
         event.setAquariumId(id);

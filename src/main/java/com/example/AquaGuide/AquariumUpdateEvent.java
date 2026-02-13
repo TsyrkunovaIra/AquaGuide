@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class AquariumUpdateEvent {
 //    @JsonProperty("care_level")
 //    private String careLevel;
-
+    private String careLevel;
     private Long aquariumId;
     private Integer height;
     private Long speciesId;
@@ -108,6 +108,14 @@ public class AquariumUpdateEvent {
 
     public void setHeight(Integer height) {
         this.height = height;
+    }
+
+    public String getCareLevel() {
+        return careLevel;
+    }
+
+    public void setCareLevel(String careLevel) {
+        this.careLevel = careLevel;
     }
 
 //    public String getCareLevel() {
