@@ -13,6 +13,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Service
 public class AquariumService {
+
+    private final AquariumProducer aquariumProducer;
     private static final String creatAquariumQry = """
             INSERT INTO Aquariums (
                 user_id,\s
@@ -38,8 +40,9 @@ public class AquariumService {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-
-
+    public void sentAquarium(AquariumUpdateEvent event){
+        aquariumProducer.sendUpdate(event);
+    }
 
     public Integer createAquarium(AquariumUpdateEvent event) {
         var parmMap = Map.of("user_id", event.getUserId(),
@@ -49,10 +52,12 @@ public class AquariumService {
                 "width", event.getWidth(),
                 "height", event.getHeight(),
                 "care_level", event.getCareLevel()
-                );   //////создать методы по примеру юзера
-        return
-    jdbcTemplate.queryForObject(creatAquariumQry, parmMap, Integer.class);
+                );
 
+        Integer aquariumID = jdbcTemplate.queryForObject(creatAquariumQry, parmMap, Integer.class);
+        event.setAquariumId(aquariumID.longValue());
+        sentAquarium(event);
+        return aquariumID;
     }
 
     private static final String getContents = """

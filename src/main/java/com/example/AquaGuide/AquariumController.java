@@ -23,30 +23,23 @@ public class AquariumController {
         return ResponseEntity.ok(id.toString());
        /// return processEvent(null, event, "CREATE_AQUARIUM", "Запрос на создание отправлен.");
     }
-
     @PostMapping("/{id}/contents")
     public ResponseEntity<String> addSpecies(
             @PathVariable Long id,
             @RequestBody AquariumUpdateEvent event) {
-        return processEvent(id, event, "ADD_SPECIES", "Подбор обитателей запущен.");
+        return processEvent(id, event, "ADD_SPECIES", "Событие отпралено в кафку. Подбор обитателей запущен.");
 
     }
-
     @GetMapping (value = "/{id}/available-species", produces = MediaType.APPLICATION_JSON_VALUE)
     public
     List<AquariumContents> addContents(@PathVariable Long id) {
         List<AquariumContents>aquariumContents = aquariumService.aquariumContents(id);
         return aquariumContents;
-
     }
-
-
     private ResponseEntity<String> processEvent(Long id, AquariumUpdateEvent event, String action, String message) {
         event.setAquariumId(id);
         event.setAction(action);
-
       //  producer.sendUpdate(event);
-
         return ResponseEntity.ok(message);
     }
 }

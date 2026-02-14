@@ -11,7 +11,6 @@ public class AquariumProducer {
     @Autowired
     private KafkaTemplate<String, AquariumUpdateEvent> kafkaTemplate;
 
-
     public void sendUpdate(AquariumUpdateEvent event) {
         kafkaTemplate.send(TOPIC, event.getAquariumId().toString(), event);
         System.out.println("Sent event to Kafka: " + event.getAction());
