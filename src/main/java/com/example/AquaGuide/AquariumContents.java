@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class AquariumContents {
+    private Long VolumeLiters;
     private Long speciesId;
     private String name;
     private String scientificName;
