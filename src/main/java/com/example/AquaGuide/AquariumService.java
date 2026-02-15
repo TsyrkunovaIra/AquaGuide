@@ -93,9 +93,13 @@ public class AquariumService {
                 ))
             ORDER BY s.care_level ASC, s.name ASC;""";
     public List<AquariumContents>aquariumContents(long aquariumId) {
-        var parmMap = Map.of("id", aquariumId);   //////создать методы по примеру юзера
+        var parmMap = Map.of("id", aquariumId);
         return jdbcTemplate.query( getContents, parmMap, new BeanPropertyRowMapper<>(AquariumContents.class));
 
     }
 
-}
+
+    }
+
+
+

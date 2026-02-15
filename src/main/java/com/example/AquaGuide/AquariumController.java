@@ -31,11 +31,12 @@ public class AquariumController {
 
     }
     @GetMapping (value = "/{id}/available-species", produces = MediaType.APPLICATION_JSON_VALUE)
-    public
-    List<AquariumContents> addContents(@PathVariable Long id) {
+    public List<AquariumContents> addContents(@PathVariable Long id) {
         List<AquariumContents>aquariumContents = aquariumService.aquariumContents(id);
         return aquariumContents;
     }
+
+
     private ResponseEntity<String> processEvent(Long id, AquariumUpdateEvent event, String action, String message) {
         event.setAquariumId(id);
         event.setAction(action);
